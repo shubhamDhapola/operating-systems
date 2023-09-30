@@ -49,7 +49,7 @@ int main()
     {
         int idx = -1;
         int mn = 10000000;
-
+     //finding the min index;
         for (int i = 0; i < n; i++)
         {
             if (p[i].arrival_time <= current_time && is_completed[i] == 0)
