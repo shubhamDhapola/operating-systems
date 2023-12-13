@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-struct process {
+struct process
+{
     int pid;
     int arrival_time;
     int burst_time;
@@ -11,7 +12,8 @@ struct process {
     int waiting_time;
 };
 
-int main() {
+int main()
+{
     int n;
     struct process p[100];
     float avg_turnaround_time = 0;
@@ -24,14 +26,16 @@ int main() {
     int burst_remaining[100];
     int is_completed[100];
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 100; i++)
+    {
         is_completed[i] = 0;
     }
 
     printf("Enter the number of processes: ");
     scanf("%d", &n);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         printf("Enter arrival time, burst time, and priority of process %d: ", i + 1);
         scanf("%d %d %d", &p[i].arrival_time, &p[i].burst_time, &p[i].priority);
         p[i].pid = i + 1;
@@ -42,19 +46,24 @@ int main() {
     int completed = 0;
     int prev = 0;
 
-    while (completed != n) {
+    while (completed != n)
+    {
         int idx = -1;
         int highest_priority = 10000000;
 
-        for (int i = 0; i < n; i++) {
-            if (p[i].arrival_time <= current_time && is_completed[i] == 0 && p[i].priority < highest_priority) {
+        for (int i = 0; i < n; i++)
+        {
+            if (p[i].arrival_time <= current_time && is_completed[i] == 0 && p[i].priority < highest_priority)
+            {
                 idx = i;
                 highest_priority = p[i].priority;
             }
         }
 
-        if (idx != -1) {
-            if (burst_remaining[idx] == p[idx].burst_time) {
+        if (idx != -1)
+        {
+            if (burst_remaining[idx] == p[idx].burst_time)
+            {
                 p[idx].start_time = current_time;
                 total_idle_time += p[idx].start_time - prev;
             }
@@ -62,7 +71,8 @@ int main() {
             current_time++;
             prev = current_time;
 
-            if (burst_remaining[idx] == 0) {
+            if (burst_remaining[idx] == 0)
+            {
                 p[idx].completion_time = current_time;
                 p[idx].turnaround_time = p[idx].completion_time - p[idx].arrival_time;
                 p[idx].waiting_time = p[idx].turnaround_time - p[idx].burst_time;
@@ -73,7 +83,9 @@ int main() {
                 is_completed[idx] = 1;
                 completed++;
             }
-        } else {
+        }
+        else
+        {
             current_time++;
         }
     }
@@ -81,7 +93,8 @@ int main() {
     int min_arrival_time = 10000000;
     int max_completion_time = -1;
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         min_arrival_time = (p[i].arrival_time < min_arrival_time) ? p[i].arrival_time : min_arrival_time;
         max_completion_time = (p[i].completion_time > max_completion_time) ? p[i].completion_time : max_completion_time;
     }
@@ -93,7 +106,8 @@ int main() {
 
     printf("\nPid\tAT\tBT\tPriority\tST\tCT\tTAT\tWT\n");
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].arrival_time, p[i].burst_time, p[i].priority, p[i].start_time, p[i].completion_time, p[i].turnaround_time, p[i].waiting_time);
     }
 

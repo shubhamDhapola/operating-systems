@@ -75,7 +75,7 @@ int main()
             if (burst_remaining[idx] == p[idx].burst_time)
             {
                 p[idx].start_time = current_time;
-                total_idle_time += p[idx].start_time - prev;
+                total_idle_time += p[idx].start_time - prev;    
             }
             burst_remaining[idx] -= 1;
             current_time++;
