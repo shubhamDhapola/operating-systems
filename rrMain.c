@@ -84,8 +84,8 @@ int getFront()
 
 void bubbleSort(struct process p[], int n, int field)
 {
-    for (int i = 0; i < n - 1; i++)
-        for (int j = 0; j < n - i - 1; j++)
+    for (int i = 0; i < n - 1; i++){
+         for (int j = 0; j < n - i - 1; j++)
             if ((field == 0 ? p[j].arrival_time > p[j + 1].arrival_time : p[j].pid > p[j + 1].pid))
             // Swap p[j] and p[j+1]
             {
@@ -93,7 +93,11 @@ void bubbleSort(struct process p[], int n, int field)
                 p[j] = p[j + 1];
                 p[j + 1] = temp;
             }
+    }
+       
 }
+
+
 
 int main()
 {
@@ -121,25 +125,31 @@ int main()
     {
         printf("Enter at and bt of process %d: ", i + 1);
         scanf("%d %d", &p[i].arrival_time, &p[i].burst_time);
-        burst_remaining[i] = p[i].burst_time;
+        // burst_remaining[i] = p[i].burst_time;
         p[i].pid = i + 1;
         printf("\n");
     }
-    bubbleSort(p, n, 0);
-
+    //burst remaining will be done separately after sorting;
+     bubbleSort(p, n, 0);
+for(int i=0;i<n;i++)
+{
+    burst_remaining[i]=p[i].burst_time;
+}
     initializeQueue();
     push(0);
     int current_time = 0;
     int completed = 0;
-    int mark[100];
+    int visited[100];
     for (int i = 0; i < 100; i++)
     {
-        mark[i] = 0;
+        visited[i] = 0;
     }
-    mark[0] = 1;
+    visited[0] = 1;
 
     while (completed != n)
     {
+    // bubbleSort(p, n, 0);
+
         idx = getFront();
         pop();
 
@@ -171,10 +181,10 @@ int main()
 
         for (int i = 1; i < n; i++)
         {
-            if (burst_remaining[i] > 0 && p[i].arrival_time <= current_time && mark[i] == 0)
+            if (burst_remaining[i] > 0 && p[i].arrival_time <= current_time && visited[i] == 0)
             {
                 push(i);
-                mark[i] = 1;
+                visited[i] = 1;
             }
         }
         if (burst_remaining[idx] > 0)
@@ -189,7 +199,7 @@ int main()
                 if (burst_remaining[i] > 0)
                 {
                     push(i);
-                    mark[i] = 1;
+                    visited[i] = 1;
                     break;
                 }
             }

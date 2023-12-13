@@ -48,22 +48,22 @@ int main()
     while (completed != n)
     {
         int idx = -1;
-        int mn = 10000000;
+        int min = 10000000;
      //finding the min index;
         for (int i = 0; i < n; i++)
         {
             if (p[i].arrival_time <= current_time && is_completed[i] == 0)
             {
-                if (burst_remaining[i] < mn)
+                if (burst_remaining[i] < min)
                 {
-                    mn = burst_remaining[i];//least burst time
+                    min = burst_remaining[i];//least burst time
                     idx = i;   //next process to be executed
                 }
-                if (burst_remaining[i] == mn)//if multiple process have same burst time , check their arrival time
+                if (burst_remaining[i] == min)//if multiple process have same burst time , check their arrival time
                 {
                     if (p[i].arrival_time < p[idx].arrival_time)
                     {
-                        mn = burst_remaining[i];
+                        min = burst_remaining[i];
                         idx = i;
                     }
                 }

@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Process {
+struct Process
+{
     int pid, arrival, burst, completion, turnaround, waiting;
 };
 
-int main() {
+int main()
+{
     int n, total = 0, idle = 0;
     float avg_waiting = 0, avg_turnaround = 0;
 
@@ -14,13 +16,15 @@ int main() {
 
     struct Process *p = malloc(sizeof(struct Process) * n);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         printf("Enter arrival time and burst time for process %d: ", i + 1);
         scanf("%d %d", &p[i].arrival, &p[i].burst);
         p[i].pid = i + 1;
     }
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         p[i].completion = (i == 0) ? p[i].arrival + p[i].burst : p[i - 1].completion + p[i].burst;
         p[i].turnaround = p[i].completion - p[i].arrival;
         p[i].waiting = p[i].turnaround - p[i].burst;
@@ -32,7 +36,8 @@ int main() {
 
     printf("\nPID\tArrival time \tBurst time\tCompletion time\tTurnaround time\tWaiting time\n");
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n", p[i].pid, p[i].arrival, p[i].burst,
                p[i].completion, p[i].turnaround, p[i].waiting);
     }
